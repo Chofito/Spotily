@@ -1,5 +1,6 @@
-import { LOADING, FAILED, SUCCEED } from "../../types/actionTypes";
-import { reducerGenerator } from "../helpers";
+// @flow
+import { LOADING, FAILED, SUCCEED } from "../../types/spotilyTypes";
+import { reducerGenerator } from "../../utils/reduxHelpers";
 
 const initialState = {
   albums: []
@@ -21,7 +22,7 @@ const actionsHandlers = () => ({
   })
 });
 
-export const reducer = (name: string, state) => {
+export const reducer = (name: string, state: any) => {
   const stateToUse = state || initialState;
   return reducerGenerator(name, actionsHandlers(), stateToUse);
 };

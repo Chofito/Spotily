@@ -1,16 +1,17 @@
 [ignore]
-.*/node_modules/.*
-.*/build/.*
-.*/src/serviceWorker.js
-.*/src/index.js
+.*/node_modules/*
+.*/build/*
 
 [include]
 
 [libs]
+./src/types/global.js  // this can be any path and filename you wish
+./flow-typed
 
 [lints]
 
 [options]
-all=true
+module.name_mapper='^\(.*\)\.scss$' -> 'CSSModule'
+module.system=haste
 
 [strict]

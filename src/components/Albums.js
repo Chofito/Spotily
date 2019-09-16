@@ -1,33 +1,32 @@
-import React from "react";
-import { connect } from "react-redux";
-import actions from "../store/actions/index";
+// @flow
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import type { Album } from '../types/spotilyTypes';
+import AlbumItem from './Album';
 
-const albumsActions = actions("albums");
-
-const Albums = ({ albums, dispatch }) => {
-  return (
-    <div>
-      {albums.map((album, index) => {
-        console.log(album);
-        return <li key={index}>{album.album.name}</li>;
-      })}
-      <button
-        onClick={() => {
-          dispatch(albumsActions.loading());
-          console.log(albums);
-        }}
-      >
-        Albums
-      </button>
-    </div>
-  );
+type albumProps = {
+  albums: Array<Album>,
+  onClick: () => void,
+  onClickPlay: () => void,
 };
 
-const mapStateToProps = state => {
-  console.log(state);
-  return {
-    albums: state.albums.albums
-  };
-};
+class Albums extends Component<albumProps> {
+  componentDidMount() {}
 
-export default connect(mapStateToProps)(Albums);
+  render() {
+    return (
+      <div>
+        {this.props.albums.map(album => {
+          <AlbumItem
+            key={album.added_at}
+            onClick={this.props.onClick}
+            onClickPlay={this.props.onClickPlay}
+            album={album}
+          ></AlbumItem>;
+        })}
+      </div>
+    );
+  }
+}
+
+export default connect()(Albums);
