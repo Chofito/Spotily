@@ -1,32 +1,58 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { dataActions, changePlayingElement } from '../actions/index';
 import type { Album } from '../types/spotilyTypes';
 import AlbumItem from './Album';
 
+const albumsActions = dataActions('albums');
+
 type albumProps = {
   albums: Array<Album>,
-  onClick: () => void,
-  onClickPlay: () => void,
+  onClick: Function,
+  onClickPlay: Function,
+  loadAlbums: Function,
 };
 
 class Albums extends Component<albumProps> {
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.loadAlbums();
+  }
 
   render() {
     return (
-      <div>
+      <div className="columns is-multiline">
         {this.props.albums.map(album => {
-          <AlbumItem
-            key={album.added_at}
-            onClick={this.props.onClick}
-            onClickPlay={this.props.onClickPlay}
-            album={album}
-          ></AlbumItem>;
+          return (
+            <AlbumItem
+              key={album.added_at}
+              onClick={this.props.onClick}
+              onClickPlay={() => {
+                this.props.onClickPlay(album.album.uri);
+              }}
+              album={album}
+            />
+          );
         })}
       </div>
     );
   }
 }
 
-export default connect()(Albums);
+const mapDispatchToProps = dispatch => {
+  return {
+    loadAlbums: () => dispatch(albumsActions.loading()),
+    onClickPlay: (newMedia: string | Array<string>) =>
+      dispatch(changePlayingElement(newMedia)),
+  };
+};
+
+const mapStateToProps = state => {
+  console.log(state);
+  return state.albums;
+};
+
+export default connect<*, *, *, *, *, *>(
+  mapStateToProps,
+  mapDispatchToProps
+)(Albums);

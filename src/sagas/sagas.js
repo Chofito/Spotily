@@ -2,19 +2,18 @@
 import { put, takeEvery, call, all } from 'redux-saga/effects';
 import type { Saga } from 'redux-saga';
 import spotify from 'spotify-web-api-js';
-import actions from './actions/index';
+import { dataActions } from '../actions/index';
 import { LOADING } from '../types/spotilyTypes';
 import { typeGenerator } from '../utils/reduxHelpers';
+import { TOKEN } from '../constants';
 
 const s = new spotify();
-s.setAccessToken(
-  'BQByEa85xnLvge_ovtO_jmANJ1fIsdoA1Ref_kfDPCfHSudcLQdbaMaQNGIHrOdfgv_DFGyIwuKO1ax0MBRvqJ9pstQOTj0jBnI-mKkn4UvDBBtZc6-faxIBfq_4vSMeCRPqDKnqQbg83rzHXbMBUjQYPWxKR0wiohY'
-);
+s.setAccessToken(TOKEN);
 const getMyAlbums = () => {
   return s.getMySavedAlbums();
 };
 
-const albumsActions = actions('albums');
+const albumsActions = dataActions('albums');
 
 function* getAlbums(): Saga<* | null> {
   const response = yield call(getMyAlbums);
