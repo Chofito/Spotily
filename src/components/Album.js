@@ -1,8 +1,14 @@
 // @flow
-import type { Album } from '../types/spotilyTypes';
+import type { Album } from '../types/album';
 import React from 'react';
 
-const AlbumItem = ({ album, onClick, onClickPlay }: Props) => {
+const AlbumItem = ({
+  album,
+  isSaved,
+  onClick,
+  onClickPlay,
+  onClickSaveRemove,
+}: Props) => {
   return (
     <div className="column is-3">
       <div className="card" onClick={onClick}>
@@ -21,6 +27,9 @@ const AlbumItem = ({ album, onClick, onClickPlay }: Props) => {
           <a className="card-footer-item" onClick={onClickPlay}>
             Play
           </a>
+          <a className="card-footer-item" onClick={onClickSaveRemove}>
+            {isSaved ? 'Remove' : 'Re-Save'}
+          </a>
         </footer>
       </div>
     </div>
@@ -29,8 +38,10 @@ const AlbumItem = ({ album, onClick, onClickPlay }: Props) => {
 
 type Props = {
   album: Album,
+  isSaved: boolean,
   onClick: Function,
   onClickPlay: Function,
+  onClickSaveRemove: Function,
 };
 
 export default AlbumItem;

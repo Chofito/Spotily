@@ -1,9 +1,9 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import logger from 'redux-logger';
-import { reducer as albums } from './store/albums/reducer';
-import { reducer as player } from './store/player/reducer';
-import saga from './sagas/sagas';
+import { reducer as player } from '../reducers/player';
+import { reducer as albums } from '../reducers/albums';
+import saga from '../sagas/index';
 import createSagaMiddleware from 'redux-saga';
 
 const sagaMiddleware = createSagaMiddleware();

@@ -1,6 +1,10 @@
 // @flow
+import type { Artist } from './artist';
+import type { TrackSimple } from './trackSimple';
+
 export type Album = {
   added_at: string,
+  isSaved: boolean,
   album: {
     albumType: string,
     artists: Array<Artist>,
@@ -18,7 +22,7 @@ export type Album = {
     releaseDate: string,
     releaseDatePrecision: string,
     totalTracks: number,
-    tracks: Array<trackSimple>,
+    tracks: Array<TrackSimple>,
     type: string,
     uri: string,
   },

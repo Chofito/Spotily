@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
-import { spotilyStore } from './configureStore';
+import { spotilyStore } from './store/configureStore';
 
 const root = document.getElementById('root');
 const store = spotilyStore();

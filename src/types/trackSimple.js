@@ -1,5 +1,7 @@
 // @flow
-export type trackSimple = {
+import type { Artist } from './artist'
+
+export type TrackSimple = {
   artists: Array<Artist>,
   available_markets: Array<string>,
   disc_number: number,

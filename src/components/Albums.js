@@ -1,16 +1,15 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { dataActions, changePlayingElement } from '../actions/index';
-import type { Album } from '../types/spotilyTypes';
+import { albumsActions, changePlayingElement } from '../actions/index';
+import type { Album } from '../types/album';
 import AlbumItem from './Album';
-
-const albumsActions = dataActions('albums');
 
 type albumProps = {
   albums: Array<Album>,
   onClick: Function,
   onClickPlay: Function,
+  onClickSaveRemove: Function,
   loadAlbums: Function,
 };
 
@@ -30,7 +29,11 @@ class Albums extends Component<albumProps> {
               onClickPlay={() => {
                 this.props.onClickPlay(album.album.uri);
               }}
+              onClickSaveRemove={() => {
+                this.props.onClickSaveRemove(album);
+              }}
               album={album}
+              isSaved={album.isSaved}
             />
           );
         })}
@@ -44,11 +47,14 @@ const mapDispatchToProps = dispatch => {
     loadAlbums: () => dispatch(albumsActions.loading()),
     onClickPlay: (newMedia: string | Array<string>) =>
       dispatch(changePlayingElement(newMedia)),
+    onClickSaveRemove: (album: Album) => {
+      if (album.isSaved) dispatch(albumsActions.removing(album.album.id));
+      else dispatch(albumsActions.adding(album.album.id));
+    },
   };
 };
 
 const mapStateToProps = state => {
-  console.log(state);
   return state.albums;
 };
 
